@@ -13,7 +13,14 @@ if not os.path.exists('data'):
 def load_users():
     if os.path.exists(data_file):
         with open(data_file, 'r') as f:
-            return json.load(f)
+            try:
+                data = json.load(f)
+                if isinstance(data, list):
+                    return data
+                else:
+                    return []
+            except json.JSONDecodeError:
+                return []
     return []
 
 # Save user data
